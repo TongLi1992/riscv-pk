@@ -6,7 +6,13 @@
 #include "atomic.h"
 #include <stdint.h>
 
-#define PFA_BASE           0x10017000
+#define PFA_BASE           0x10016000
+#define ICENET_MACADDR ((volatile uint64_t*)(PFA_BASE + 24))
+#define ICENET_SEND_REQ ((volatile uint64_t*)(PFA_BASE + 0))
+#define ICENET_RECV_REQ ((volatile uint64_t*)(PFA_BASE + 8)) 
+#define ICENET_SEND_COMP ((volatile uint16_t*)(PFA_BASE + 16))
+#define ICENET_RECV_COMP ((volatile uint16_t*)(PFA_BASE + 18))
+#define ICENET_COUNTS ((volatile uint16_t*)(PFA_BASE + 20))
 // #define PFA_BASE           0x2000
 #define PFA_FREEFRAME      ((volatile uintptr_t*)(PFA_BASE))
 #define PFA_FREESTAT       ((volatile uint64_t*)(PFA_BASE + 8))
@@ -68,4 +74,7 @@ bool pfa_is_evictqueue_empty(void);
 
 bool pfa_is_freequeue_empty(void);
 
+bool test_mac();
+bool test_send_one();
+bool test_recv();
 #endif

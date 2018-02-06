@@ -10,8 +10,14 @@
 #include "pfa.h"
 #include <stdbool.h>
 #include <stdlib.h>
-
+//#include "icenet_raw.h"
 elf_info current;
+/*
+bool test_mac() {
+  uint64_t macaddr = ioread64(nic->iomem + ICENET_MACADDR);
+}
+*/
+
 
 bool queues_empty() {
   bool ret = true;
@@ -625,10 +631,13 @@ bool test_evict_largepgid() {
   return true;
 }
 
+
 int main()
 {
+//  icenic_t * = icenet_init();  
+  
   pfa_init();
-
+  return 0;
   if(!test_one(false)) {
     printk("Test Failure!\n");
     return EXIT_FAILURE;
@@ -678,10 +687,13 @@ int main()
     printk("Test Failure!\n");
     return EXIT_FAILURE;
   }
-
+  
   printk("Test Success!\n");
   return EXIT_SUCCESS;
 }
+
+
+
 
 static void rest_of_boot_loader(uintptr_t kstack_top)
 {
@@ -716,9 +728,14 @@ void boot_loader(uintptr_t dtb)
   enter_supervisor_mode(rest_of_boot_loader, pk_vm_init(), 0);
 }
 
+
+
+
+
 void boot_other_hart(uintptr_t dtb)
 {
   // stall all harts besides hart 0
   while (1)
     wfi();
 }
+
